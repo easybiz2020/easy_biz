@@ -4,7 +4,7 @@ easy_biz 是一个分享具体的业务解决方案/思维的组织
 
 ## 主题
 
-[1、如何设计软删除/逻辑删除（soft delete）？](./arhive/t1-如何设计soft-delete.md)
+[1、如何设计软删除/逻辑删除（soft delete）？](./archive/t1-如何设计soft-delete.md)
 
 ## 结构说明
 
