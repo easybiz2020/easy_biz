@@ -29,7 +29,7 @@ PS：互联网企业收集的个人信息、电商类平台用户的订单、金
 
 来自@[siu91](https://github.com/siu91) 
 
-[样例代码](./demo/demo1.md)
+[样例代码](../demo/demo1.md)
 
 ```txt
 xxxxx  
