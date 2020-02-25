@@ -6,6 +6,8 @@ easy_biz 是一个分享具体的业务解决方案/思维的组织
 
 [1、如何设计软删除/逻辑删除（soft delete）？](./archive/t1-如何设计soft-delete.md)
 
+[2、Web项目自动代码生成方案，哪个最优？](./archive/t2-web项目中各应用层代码用什么生成方式好.md)
+
 ## 结构说明
 
 - archive 归档的主题内容
