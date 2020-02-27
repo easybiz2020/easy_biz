@@ -48,7 +48,7 @@ xxxx
 xxx
 ```
 
-来自@[张羽](https://github.com/Sev7nzy) 
+来自@[Sev7nzy](https://github.com/Sev7nzy) 
 
 ```txt
 1. 创建历史删除表
