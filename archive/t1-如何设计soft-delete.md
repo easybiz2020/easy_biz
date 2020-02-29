@@ -44,10 +44,10 @@ PS：互联网企业收集的个人信息、电商类平台用户的订单、金
 方案B：UNIQUE INDEX WHERE CAUSE 方式
 1）数据库实现
    a）Postgres：
-      CREATE UNIQUE index UNIQUE_KEY_unq on T(UNIQUE_KEY) where DEL_S = 0;
+      CREATE UNIQUE index UNIQUE_KEY_INDEX on T(UNIQUE_KEY) where DEL_S = 0;
       参见：【附4】【附5】
    b）Oracle 12c 支持Partial Indexes（未验证是否满足需求），见【附6】
-   b）其他数据库实现方式暂未查找
+   c）其他数据库实现方式暂未查找
 
 ```
 
