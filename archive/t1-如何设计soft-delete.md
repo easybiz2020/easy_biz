@@ -16,10 +16,10 @@
 PS：互联网企业收集的个人信息、电商类平台用户的订单、金融类平台的交易记录，肯定是不能删除
 
 具体表设计举例：
-           表T [主键(ID)，某业务唯一编码（UNIQUE_EY），删除标记(DEL_S)，其他省略]
+           表T [主键(ID)，某业务唯一编码（UNIQUE_KEY），删除标记(DEL_S)，其他省略]
            DEL_S: 删除标记,0-未删除
            
-问题：update T set DEL_S=删除 where ID=${ID}，多次删除 UNIQUE_EY 冲突了
+问题：update T set DEL_S=删除 where ID=${ID}，多次删除 UNIQUE_KEY 冲突了
 如何设计一个合理的软删除/逻辑删除？
 ```
 
@@ -27,16 +27,28 @@ PS：互联网企业收集的个人信息、电商类平台用户的订单、金
 
 ## 解决方案
 
-来自@[siu91](https://github.com/siu91) 
-
-[样例代码](../demo/demo1.md)
+来自@[siu91](https://github.com/siu91) ，以下两个方案与@[drj_2020](https://github.com/drj_2020)的想法是一致的
 
 ```txt
-xxxxx  
-xxxx
-xxxx
-xxxx
-xxxx
+方案A:UNIQUE_KEY与DEL_S联合唯一 + 使用序列方式更新DEL_S（或是其它类型的DEL_S）
+1）应用层实现方式
+  a）JPA（Hibernate）
+     @SQLDelete(sql = "UPDATE T SET DEL_S = nextval( 'seq' ) WHERE ID = ?")
+     @Where(clause = "DEL_S = 0")
+     
+  b）Mybatis-plus官方未支持这种方式（待确认），官方方式见【附3】
+    在Mybatis-plus github 上找到两个issues，有人提出了问题和解决思路
+    1、https://github.com/baomidou/mybatis-plus/issues/1750
+    2、https://github.com/baomidou/mybatis-plus/issues/1386
+    
+方案B：UNIQUE INDEX WHERE CAUSE 方式
+1）数据库实现
+   a）Postgres：
+      CREATE UNIQUE index UNIQUE_KEY_unq on T(UNIQUE_KEY) where DEL_S = 0;
+      参见：【附4】【附5】
+   b）Oracle 12c 支持Partial Indexes（未验证是否满足需求），见【附6】
+   b）其他数据库实现方式暂未查找
+
 ```
 
 来自@[Sev7nzy](https://github.com/Sev7nzy) 
@@ -59,12 +71,12 @@ xxxx
 
 来自@[drj_2020](https://github.com/drj_2020)
 ```txt
-1.创建联合索引，将UNIQUE_EY与DEL_S创建为联合索引
+1.创建联合索引，将UNIQUE_KEY与DEL_S创建为联合索引
 （1）创建删除序列，队列从1开始，未删除数据删除标记(DEL_S)设为0，删除数据删除标记(DEL_S)设为取序列值。
 （2）删除字段采用int8,未删除的还是标记未0，删除的标记(DEL_S)数据取时间戳。
 
 2.对于pg等数据库，可以创建带条件的联合索引
-  create unique index idx_ey_unq on t1(UNIQUE_EY) where DEL_S = 0;
+  create unique index idx_ey_unq on t1(UNIQUE_KEY) where DEL_S = 0;
 
 
 ```
@@ -111,3 +123,7 @@ xxxx
 
 - [附1-梦想超人博客-数据库逻辑删除的解决方案探讨](https://blog.csdn.net/weixin_43379172/article/details/86743532)
 - [附2-「mwhgmwhg」的原创文章-关于数据库表字段逻辑删除设计的思考](https://blog.csdn.net/mwhgmwhg/article/details/84927037)
+- [附3-MyBatis-Plus 逻辑删除](https://mp.baomidou.com/guide/logic-delete.html)
+- [附4-Postgres部分索引](https://www.postgresql.org/docs/current/indexes-partial.html)
+- [附5-stackoverflow：postgresql-conditionally-unique-constraint](https://stackoverflow.com/questions/16236365/postgresql-conditionally-unique-constraint)
+- [附6-oracle 12c partial indexes](https://docs.oracle.com/database/121/VLDBG/GUID-256BA7EE-BF49-42DE-9B38-CD2480A73129.htm)
