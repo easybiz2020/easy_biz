@@ -114,7 +114,7 @@ PS：互联网企业收集的个人信息、电商类平台用户的订单、金
 ```txt
 上面主要的实现方式总结以下：
 
-1、DEL_S 设置成唯一的标记（序列，UUID，时间戳，NULL），根据业务设置UNIQUE_KEY的组合
+1、DEL_S 设置成删除的标记（序列，UUID，时间戳，NULL），根据业务设置UNIQUE_KEY的组合
 2、UNIQUE INDEX WHERE CAUSE 方式（Postgres）
 3、分表（删除表/每张表一张删除表）
 
