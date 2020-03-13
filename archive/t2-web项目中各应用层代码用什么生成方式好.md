@@ -39,11 +39,11 @@
 
 - 选择数据源中的表（一张或多张）
 
-![image-20200306141953803](C:\Users\Workstation\siu\easy_biz\archive\assets\image-20200306141953803.png)
+![image-20200306141953803](./assets/image-20200306141953803.png)
 
 - 使用扩展脚本生成（自定义的）代码，选择生成位置
 
-  ![image-20200306142128109](C:\Users\Workstation\siu\easy_biz\archive\assets\image-20200306142128109.png)
+  ![image-20200306142128109](./assets/image-20200306142128109.png)
 
 - 使用方法
 
